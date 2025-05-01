@@ -68,8 +68,8 @@ export enum CardRank {
   TWO = "2"
 }
 
-export interface Card {
-  color: CardColor
-  suit: CardSuit
-  value: CardRank
-}
+// export interface Card {
+//   color: CardColor
+//   suit: CardSuit
+//   value: CardRank
+// }
