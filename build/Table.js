@@ -4,19 +4,23 @@ exports.BettingRound = exports.Pot = exports.Table = void 0;
 const pokersolver_1 = require("pokersolver");
 const _1 = require(".");
 class Table {
-    constructor(buyIn = 1000, smallBlind = 5, bigBlind = 10) {
+    constructor(buyIn = 1000, smallBlind = 5, bigBlind = 10, playerLimit = 6) {
         this.buyIn = buyIn;
         this.smallBlind = smallBlind;
         this.bigBlind = bigBlind;
+        this.playerLimit = playerLimit;
         this.autoMoveDealer = true;
         this.communityCards = [];
         this.debug = false;
         this.deck = [];
         this.handNumber = 0;
-        this.players = [];
+        this.players = [null, null, null, null, null, null, null, null, null, null];
         this.pots = [];
         if (smallBlind >= bigBlind) {
             throw new Error("The small blind must be less than the big blind.");
+        }
+        if (playerLimit < 2) {
+            throw new Error("There must be at least 2 players.");
         }
     }
     get actingPlayers() {
@@ -105,7 +109,7 @@ class Table {
     sitDown(id, buyIn, seatNumber) {
         var _a;
         // If there are no null seats then the table is full.
-        if (this.players.filter(player => player === null).length === 0) {
+        if (this.players.length >= this.playerLimit) {
             throw new Error("The table is currently full.");
         }
         if (buyIn < this.buyIn) {
@@ -121,10 +125,13 @@ class Table {
         const newPlayer = new _1.Player(id, buyIn, this);
         if (!seatNumber) {
             seatNumber = 0;
-            while (this.players[seatNumber] !== null) {
+            while (true) {
+                if (this.players[seatNumber] == null) {
+                    break;
+                }
                 seatNumber++;
-                if (seatNumber >= this.players.length) {
-                    throw new Error("No available seats!");
+                if (seatNumber >= this.playerLimit) {
+                    throw new Error("There are no available seats.");
                 }
             }
         }

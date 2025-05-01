@@ -3,6 +3,7 @@ export declare class Table {
     buyIn: number;
     smallBlind: number;
     bigBlind: number;
+    playerLimit: number;
     autoMoveDealer: boolean;
     bigBlindPosition?: number;
     communityCards: Card[];
@@ -19,7 +20,7 @@ export declare class Table {
     pots: Pot[];
     smallBlindPosition?: number;
     winners?: Player[];
-    constructor(buyIn?: number, smallBlind?: number, bigBlind?: number);
+    constructor(buyIn?: number, smallBlind?: number, bigBlind?: number, playerLimit?: number);
     get actingPlayers(): Player[];
     get activePlayers(): Player[];
     get bigBlindPlayer(): Player | null | undefined;

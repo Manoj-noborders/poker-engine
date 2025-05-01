@@ -14,7 +14,7 @@ export class Table {
   public handNumber: number = 0;
   public lastPosition?: number;
   public lastRaise?: number;
-  public players: (Player|null)[] = [];
+  public players: (Player|null)[] = [null, null, null, null, null, null, null, null, null, null];
   public pots: Pot[] = [];
   public smallBlindPosition?: number;
   public winners?: Player[];
@@ -22,10 +22,14 @@ export class Table {
   constructor (
     public buyIn: number = 1000,
     public smallBlind: number = 5,
-    public bigBlind: number = 10
+    public bigBlind: number = 10,
+    public playerLimit: number = 6
   ) {
     if (smallBlind >= bigBlind) {
       throw new Error("The small blind must be less than the big blind.");
+    }
+    if (playerLimit < 2) {
+      throw new Error("There must be at least 2 players.")
     }
   }
 
@@ -120,7 +124,7 @@ export class Table {
 
   sitDown(id: string, buyIn: number, seatNumber?: number) {
     // If there are no null seats then the table is full.
-    if (this.players.filter(player => player === null).length === 0) {
+    if (this.players.length >= this.playerLimit) {
       throw new Error("The table is currently full.");
     }
     if (buyIn < this.buyIn) {
@@ -134,14 +138,22 @@ export class Table {
       throw new Error("There is already a player in the requested seat.");
     }
     const newPlayer = new Player(id, buyIn, this);
+
     if (!seatNumber) {
       seatNumber = 0;
-      while (this.players[seatNumber] !== null) {
+
+      while (true) {
+        if (this.players[seatNumber] == null) {
+          break;
+        }
+
         seatNumber++;
-        if (seatNumber >= this.players.length) {
-          throw new Error("No available seats!");
+
+        if (seatNumber >= this.playerLimit) {
+          throw new Error("There are no available seats.");
         }
       }
+
     }
     this.players[seatNumber] = newPlayer;
     if (this.currentRound) {
