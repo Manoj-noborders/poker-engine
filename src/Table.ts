@@ -14,7 +14,7 @@ export class Table {
   public handNumber: number = 0;
   public lastPosition?: number;
   public lastRaise?: number;
-  public players: (Player|null)[] = [null, null, null, null, null, null, null, null, null, null];
+  public players: (Player|null)[] = [];
   public pots: Pot[] = [];
   public smallBlindPosition?: number;
   public winners?: Player[];
