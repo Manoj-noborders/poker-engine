@@ -137,6 +137,7 @@ class Player {
         this.table.nextAction();
     }
     legalActions() {
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
         const currentBet = this.table.currentBet;
         const lastRaise = this.table.lastRaise;
         const actions = [];
@@ -150,6 +151,17 @@ class Player {
                     actions.push("raise");
                 }
             }
+            console.log({
+                playerId: this.id,
+                bet: this.bet,
+                stackSize: this.stackSize,
+                currentBet: (_b = (_a = this.table) === null || _a === void 0 ? void 0 : _a.currentBet) !== null && _b !== void 0 ? _b : 0,
+                lastRaise: (_d = (_c = this.table) === null || _c === void 0 ? void 0 : _c.lastRaise) !== null && _d !== void 0 ? _d : 0,
+                raise: this.raise,
+                canRaise: this.stackSize > ((_f = (_e = this.table) === null || _e === void 0 ? void 0 : _e.currentBet) !== null && _f !== void 0 ? _f : 0) &&
+                    ((_j = (_h = (_g = this.table) === null || _g === void 0 ? void 0 : _g.actingPlayers) === null || _h === void 0 ? void 0 : _h.length) !== null && _j !== void 0 ? _j : 0) > 0 &&
+                    (!((_k = this.table) === null || _k === void 0 ? void 0 : _k.lastRaise) || !this.raise || this.table.lastRaise >= this.raise),
+            });
             if (this.bet < currentBet) {
                 actions.push("call");
                 if (this.stackSize > currentBet && this.table.actingPlayers.length > 0 && (!lastRaise || !this.raise || lastRaise >= this.raise)) {

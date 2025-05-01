@@ -150,6 +150,19 @@ export class Player {
             actions.push("raise");
           }
         }
+        console.log({
+          playerId: this.id,
+          bet: this.bet,
+          stackSize: this.stackSize,
+          currentBet: this.table?.currentBet ?? 0,
+          lastRaise: this.table?.lastRaise ?? 0,
+          raise: this.raise,
+          canRaise:
+            this.stackSize > (this.table?.currentBet ?? 0) &&
+            (this.table?.actingPlayers?.length ?? 0) > 0 &&
+            (!this.table?.lastRaise || !this.raise || this.table.lastRaise >= this.raise),
+        });
+
         if (this.bet < currentBet) {
           actions.push("call");
           if (this.stackSize > currentBet && this.table.actingPlayers.length > 0 && (!lastRaise || !this.raise || lastRaise >= this.raise)) {
