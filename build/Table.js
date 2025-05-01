@@ -14,7 +14,7 @@ class Table {
         this.debug = false;
         this.deck = [];
         this.handNumber = 0;
-        this.players = [null, null, null, null, null, null, null, null, null, null];
+        this.players = [];
         this.pots = [];
         if (smallBlind >= bigBlind) {
             throw new Error("The small blind must be less than the big blind.");
